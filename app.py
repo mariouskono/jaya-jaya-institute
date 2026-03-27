@@ -51,6 +51,7 @@ menu = st.sidebar.radio("Pilih Halaman:",
                         ["📊 Dashboard Analitik", 
                          "👤 Prediksi Individu", 
                          "📂 Prediksi Massal (CSV)", 
+                         "🤖 Model & Evaluasi",
                          "🗄️ Eksplorasi Data"])
 
 st.sidebar.markdown("---")
@@ -223,7 +224,50 @@ elif menu == "📂 Prediksi Massal (CSV)":
             st.error(f"Terjadi kesalahan saat membaca file: {e}")
 
 # ==========================================
-# HALAMAN 4: EKSPLORASI DATA
+# HALAMAN 4: MODEL & EVALUASI
+# ==========================================
+elif menu == "🤖 Model & Evaluasi":
+    st.title("🤖 Model Machine Learning & Evaluasi")
+    st.markdown("Halaman ini menyajikan transparansi terkait algoritma prediktif yang digunakan beserta metrik performanya berdasarkan pengujian data historis.")
+    
+    st.subheader("1. Algoritma: Random Forest Classifier")
+    st.write("""
+    Sistem prediksi ini ditenagai oleh algoritma **Random Forest**. Pendekatan *ensemble learning* ini dipilih karena beberapa alasan strategis:
+    - **Tangguh Terhadap Banyak Fitur:** Mampu menangani 36 fitur akademik dan demografi secara bersamaan tanpa rentan terhadap *overfitting*.
+    - **Penanganan Ketidakseimbangan Kelas:** Menggunakan parameter `class_weight='balanced'` yang secara proaktif memberikan penalti lebih besar jika algoritma gagal mendeteksi kelas minoritas (*Dropout*). Ini memastikan model tidak bias hanya menebak mahasiswa akan lulus.
+    """)
+    
+    st.markdown("---")
+    
+    st.subheader("2. Performa Model (Classification Report)")
+    st.write("Berdasarkan pengujian pada **726 data uji** (*unseen data*), model menghasilkan performa empiris sebagai berikut:")
+    
+    # Menampilkan metrik dalam bentuk kartu yang estetik
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric(label="Akurasi Keseluruhan", value="93%")
+    col2.metric(label="Recall (Dropout)", value="88%")
+    col3.metric(label="Precision (Dropout)", value="94%")
+    col4.metric(label="F1-Score (Dropout)", value="91%")
+    
+    st.info("💡 **Metrik Paling Krusial:** Dalam konteks institusi pendidikan, mendeteksi sebanyak mungkin probabilitas *dropout* adalah yang terpenting. Nilai **Recall 88%** membuktikan bahwa dari seluruh mahasiswa yang aktualnya keluar, model berhasil menyelamatkan/mendeteksi 88% di antaranya sejak dini.")
+    
+    st.markdown("---")
+    
+    st.subheader("3. Analisis Dampak Bisnis (Confusion Matrix)")
+    st.write("Evaluasi model tidak hanya berupa angka teknis, melainkan dapat dipetakan langsung ke dalam efisiensi operasional bimbingan akademik:")
+    
+    col_cm1, col_cm2 = st.columns(2)
+    
+    with col_cm1:
+        st.success("**✅ True Positives (250 Mahasiswa)** \n\nTerdapat 250 mahasiswa *dropout* yang berhasil terdeteksi dengan tepat. Ini adalah kelompok prioritas utama untuk segera diberikan intervensi dini seperti konseling akademik atau bantuan finansial.")
+        st.info("**✅ True Negatives (425 Mahasiswa)** \n\n425 mahasiswa yang lulus berhasil diprediksi lulus dengan akurat oleh sistem.")
+        
+    with col_cm2:
+        st.warning("**⚠️ False Positives (17 Mahasiswa)** \n\nTerdapat 17 mahasiswa lulus yang diprediksi akan *dropout*. Risiko bisnisnya sangat rendah; institusi hanya mengalokasikan sedikit waktu konseling ekstra untuk mahasiswa yang sebenarnya aman.")
+        st.error("**❌ False Negatives (34 Mahasiswa)** \n\nHanya 34 mahasiswa *dropout* (di bawah 5% dari total data uji) yang luput dari deteksi sistem. Ini adalah batas toleransi eror yang sangat baik untuk model prediktif dunia nyata.")
+
+# ==========================================
+# HALAMAN 5: EKSPLORASI DATA
 # ==========================================
 elif menu == "🗄️ Eksplorasi Data":
     st.title("🗄️ Eksplorasi Data Mentah")
