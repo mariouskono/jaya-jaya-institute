@@ -81,7 +81,7 @@ Aplikasi akan secara otomatis terbuka di *browser* Anda pada alamat `http://loca
 
 **(Opsional) Akses Cloud:**
 Aplikasi ini juga telah di-*deploy* ke Streamlit Community Cloud dan dapat diakses melalui tautan berikut:
-*[Masukkan Link Streamlit Cloud Anda Di Sini jika ada]*
+*[https://jaya-jaya-institute.streamlit.app/]*
 
 ---
 **Submission oleh: Bertnardo Mario Uskono (Uno)**
